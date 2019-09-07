@@ -16,7 +16,6 @@ From the BOM [copyright notice](http://reg.bom.gov.au/other/copyright.shtml): Wh
 ```
 from weather import observations, place
 
-
 obs = observations.Observations('Vic')
 
 print(f'Product ID: {obs.identifier}\n')
@@ -31,7 +30,6 @@ for station in obs.stations():
         print(f'{wmo_id} {description}')
     else:
         print(f'{wmo_id} {description}   ({air_temperature})')
-
 
 obsp = place.Place('vic', 'parkville')
 
