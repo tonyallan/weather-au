@@ -4,11 +4,11 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="weather-au-tony_allan",
+    name="weather-au",
     version="0.0.1",
     author="Tony Allan",
     author_email="tony@apms.com.au",
-    description="Access to the Australian Bureau of Meteorology weather data",
+    description="Australian Weather Data (using bom.gov.au)",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/tonyallan/weather-au",
