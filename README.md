@@ -1,5 +1,6 @@
 # bom.gov.au
 Access to the Australian [Bureau of Meteorology](https://bom.gov.au/) weather data.
+[![Actions Status](https://github.com/{owner}/{repo}/workflows/{workflow_name}/badge.svg)](https://github.com/{owner}/{repo}/actions)
 
 Currently a work in progress!
 
