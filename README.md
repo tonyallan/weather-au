@@ -13,7 +13,7 @@ From the BOM [copyright notice](http://reg.bom.gov.au/other/copyright.shtml): Wh
 
 ## Usage
 
-```
+```python3
 from weather import observations, place
 
 obs = observations.Observations('Vic')
