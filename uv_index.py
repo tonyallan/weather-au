@@ -8,7 +8,7 @@ class Observations:
 
         self.state = state
         self.soup = weather.fetch_xml(weather.OBSERVATION_PRODUCT_URL[state])
-        self.identifier = self.soup.identifier.contents[0]
+        self.identifier = self.soup.find('identifier').contents[0]
     
 
     def stations(self):
@@ -27,7 +27,7 @@ class Observations:
 
 
     def air_temperature(self, wmo_id=None):
-        """ Don't assume that any elements exist or that there is an element with type air_temperature
+        """ Don't assume that any elements exist or an element with type air_temperature
         """
 
         elements = self.soup.find('station', {'wmo-id': wmo_id})

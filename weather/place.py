@@ -3,28 +3,23 @@ import urllib.request
 
 from bs4 import BeautifulSoup
 
+import weather
+
 
 class PlaceException(Exception):
     pass
 
 class Place:
 
-    URL = 'http://www.bom.gov.au/places/{state}/{location}'
-
-    USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 ' \
-                 '(KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
-
-
     def __init__(self,state=None, location=None):
         # See http://www.bom.gov.au/places/ to search for valid locations.
         # Will raise urllib.error.HTTPError if state or place not found
 
-        self.url = self.URL.format(state=state, location=location)
+        self.url = weather.PLACES_URL.format(state=state, location=location)
 
-        req = urllib.request.Request(self.url, data=None, headers={'User-Agent': self.USER_AGENT})
-
-        f = urllib.request.urlopen(req)
-        page_html =  f.read().decode('utf-8') # assume utf-8
+        req = urllib.request.Request(self.url, data=None, headers={'User-Agent': weather.PLACES_USER_AGENT})
+        page_html = urllib.request.urlopen(req).read()
+        
         self.soup = BeautifulSoup(page_html, 'html.parser')
 
 

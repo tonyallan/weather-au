@@ -2,7 +2,6 @@
 
 import bs4 # uses lxml
 import urllib.request
-#import xml.dom.minidom
 
 
 # Weather Data Services
@@ -32,13 +31,30 @@ OBSERVATION_PRODUCT_URL = {
     'WA':  'ftp://ftp.bom.gov.au/anon/gen/fwo/IDW60920.xml'
     }
 
+UV_INDEX_PRODUCT_URL = {
+    'ACT': 'ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00107.xml',
+    'NSW': 'ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00107.xml',
+    'NT':  'ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00108.xml',
+    'Qld': 'ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00109.xml',
+    'SA':  'ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00110.xml',
+    'Tas': 'ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00111.xml',
+    'Vic': 'ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00112.xml',
+    'WA':  'ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00113.xml'
+    }
+
+PLACES_URL = 'http://www.bom.gov.au/places/{state}/{location}'
+
+PLACES_USER_AGENT = \
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 ' \
+    '(KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+
 
 # Helper functions
+# https://stackoverflow.com/questions/49639450/scraping-xml-data-with-bs4-lxml
 
 def fetch_xml(url):
     
     req = urllib.request.Request(url)
     r = urllib.request.urlopen(req).read()
 
-    return bs4.BeautifulSoup(r.decode('utf-8'), 'lxml')
-
+    return bs4.BeautifulSoup(r, 'xml')
