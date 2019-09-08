@@ -1,7 +1,7 @@
 # Australian Weather Data (using bom.gov.au)
 Access to the Australian [Bureau of Meteorology](https://bom.gov.au/) weather data.
 
-[![Actions Status](https://github.com/tonyallan/weather-au/workflows/weather-au-build/badge.svg)](https://github.com/tonyallan/weather-au/actions)
+[![Actions Status](https://github.com/tonyallan/weather-au/workflows/build/badge.svg)](https://github.com/tonyallan/weather-au/actions)
 ![PyPI](https://img.shields.io/pypi/v/weather-au)
 
 Currently a work in progress!
