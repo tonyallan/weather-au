@@ -12,6 +12,7 @@ class Observations:
     
 
     def stations(self):
+        # List of station attributes
 
         station_list =[]
 
@@ -21,9 +22,20 @@ class Observations:
         return station_list
 
 
-    def elements(self, wmo_id=None):
+    def station_elements(self, wmo_id=None):
+        # Element child tags for a specified station
 
         return self.soup.find('station', {'wmo-id': wmo_id})
+
+
+    def station_attribute(self, wmo_id=None, attribute=None):
+
+        attrs = self.soup.find('station', {'wmo-id': wmo_id}).attrs
+
+        if attribute in attrs:
+            return attrs[attribute]
+        else:
+            return None
 
 
     def air_temperature(self, wmo_id=None):

@@ -19,7 +19,7 @@ class Place:
 
         req = urllib.request.Request(self.url, data=None, headers={'User-Agent': weather.PLACES_USER_AGENT})
         page_html = urllib.request.urlopen(req).read()
-        
+
         self.soup = BeautifulSoup(page_html, 'html.parser')
 
 
@@ -36,6 +36,58 @@ class Place:
 
         temp_text = temp_node.contents[0]
         return float(temp_text[:-3])
+
+
+    def forecast(self):
+        
+        result = {}
+
+        forecasts_top = self.soup.find('div', 'forecasts-top')
+        if forecasts_top is None:
+            raise PlaceException(f"Could not parse HTML ({self.url}, tag=div class=forecasts-top)")
+
+        # <span>issued at 4:20 pm AEST on Saturday 7 September 2019.</span>
+        issued_node = forecasts_top.find('span')
+        if issued_node is None:
+            raise PlaceException(f"Could not parse HTML ({self.url}, tag=span)")
+
+        issued_text = issued_node.contents[0]
+        if 'issued at' not in issued_text:
+            raise PlaceException(f"Could not parse HTML ({self.url}, span missing 'issued at')")
+        
+        result['issued'] = issued_text[9:-1].strip()
+
+        forecast_summary = self.soup.find('dl', 'forecast-summary')
+        if forecast_summary is None:
+            raise PlaceException(f"Could not parse HTML ({self.url}, tag=dl class=forecast-summary)")
+
+        # date
+        date_node = forecast_summary.find('dt', 'date')
+        if date_node is not None:
+            a_node = date_node.find('a')
+            date_text = a_node.contents[0]
+            result['date'] = date_text.strip()
+
+        # min is not always present
+        min_node = forecast_summary.find('dd', 'min')
+        if min_node is not None:        
+            min_text = min_node.contents[0]
+            result['min'] = min_text[:-3]
+
+        # max is not always present
+        max_node = forecast_summary.find('dd', 'max')
+        if max_node is not None:
+            max_text = max_node.contents[0]
+            result['max'] = max_text[:-3]
+
+        precis_node = forecast_summary.find('dd', 'summary')
+        if precis_node is None:
+            raise PlaceException(f"Could not parse HTML ({self.url}, tag=dd class=summary)") 
+        
+        precis_text = precis_node.contents[0]
+        result['precis'] = precis_text
+
+        return result
 
 
     def station_id(self):

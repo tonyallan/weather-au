@@ -14,9 +14,16 @@ for station in obs.stations():
     description = station['description']
 
     # <element units="Celsius" type="air_temperature">9.8</element>
-    air_temperature = obs.air_temperature(station['wmo-id'])
+    air_temperature = obs.air_temperature(wmo_id)
 
     if air_temperature is None:
         print(f'{wmo_id} {description}')
     else:
         print(f'{wmo_id} {description}   ({air_temperature})')
+
+
+wmo_id = '95936'
+air_temperature = obs.air_temperature(wmo_id)
+description = obs.station_attribute(wmo_id, 'description')
+
+print(f'\nStation ID: {wmo_id}\nDescription: {description}\nAir Temperature: {air_temperature}')

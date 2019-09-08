@@ -30,8 +30,11 @@ def test_station_list():
         assert station_description is not None
 
         station_air_temperature = obs.air_temperature(station['wmo-id'])
-        #assert station_air_temperature is not None
     
 def test_air_temperature():
-    air_temperature_95936 = obs.air_temperature('95936')
-    assert air_temperature_95936 is not None
+    air_temperature = obs.air_temperature('95936')
+    assert air_temperature is not None
+
+def test_description():
+    wmo_id = '95936'
+    assert obs.station_attribute(wmo_id, 'description') == 'Melbourne (Olympic Park)'

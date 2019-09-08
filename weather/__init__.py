@@ -31,7 +31,7 @@ OBSERVATION_PRODUCT_URL = {
     'WA':  'ftp://ftp.bom.gov.au/anon/gen/fwo/IDW60920.xml'
     }
 
-UV_INDEX_PRODUCT_URL = {
+UV_ALERT_PRODUCT_URL = {
     'ACT': 'ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00107.xml',
     'NSW': 'ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00107.xml',
     'NT':  'ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00108.xml',

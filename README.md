@@ -14,92 +14,42 @@ From the BOM [copyright notice](http://reg.bom.gov.au/other/copyright.shtml): Wh
 
 ## Usage
 
-### observations
+### Sample for Parkville in Melbourne Vic Australia
 
 ```python3
-from weather import observations
-
-# Read and parse the XML file ftp://ftp.bom.gov.au/anon/gen/fwo/IDV60920.xml
-obs = observations.Observations('Vic')
-
-# Print the product ID associated with this XML file
-print(f'Product ID: {obs.identifier}\n')
-
-# <observations>
-for station in obs.stations():
-
-    # <station wmo-id="95936" ... description="Melbourne (Olympic Park)">
-    wmo_id = station['wmo-id']                                  
-    description = station['description']
-
-    # <element units="Celsius" type="air_temperature">9.8</element>
-    air_temperature = obs.air_temperature(station['wmo-id'])
-
-    if air_temperature is None:
-        print(f'{wmo_id} {description}')
-    else:
-        print(f'{wmo_id} {description}   ({air_temperature})')
-```
-
-Produces output:
-```
-Product ID: IDV60920
-
-95936 Melbourne (Olympic Park)   (10.8)
-94866 Melbourne Airport   (9.1)
-94854 Avalon   (10.2)
-...
-```
-
-### place
-
-```python3
-from weather import place
+from weather import place, observations, uv_alert
 
 # Parse http://www.bom.gov.au/places/vic/parkville
-obsp = place.Place('vic', 'parkville')
+obs_place = place.Place('vic', 'parkville')
 
-air_temperature = obsp.air_temperature()
-station_id = obsp.station_id()
+station_id = obs_place.station_id()
+print('\nStation ID',station_id)
 
-print(f'Station ID: {station_id}\nAir Temperature: {air_temperature}')
+air_temperature = obs_place.air_temperature()
+print('Air Temperature', air_temperature)
+
+forecast = obs_place.forecast()
+print('\nForecast', forecast)
+
+obs_uv = uv_alert.UvAlert('Vic')
+
+location_name = 'Melbourne'
+uv_alert = obs_uv.uv_alert(obs_uv.get_aac(location_name))
+
+print('\nUV Alert for', location_name, uv_alert)
 ```
 
 Produces output:
 ```
-Station ID: 95936
-Air Temperature: 10.8
+Station ID 95936
+Air Temperature 9.6
+
+Forecast {'issued': '4:20 pm AEST on Sunday 8 September 2019', 'date': 'Rest of Sunday', 'precis': 'Showers easing. Windy.'}
+
+UV Alert for Melbourne Sun protection recommended from 10:30 am to  2:00 pm, UV Index predicted to reach 4 [Moderate]
 ```
 
-### uv_index
-
-```python3
-from weather import uv_index
-
-obs = uv_index.UvIndex('Vic')
-
-print(f'Product ID: {obs.identifier}\n')
-
-for area in obs.area():
-
-    aac = area['aac']                                  
-    description = area['description']
-    print(f'{aac} {description}')
-
-# VIC_PT042 Melbourne
-print(obs.uv_alert('VIC_PT042'))
-```
-
-Produces output:
-```
-Product ID: IDZ00112
-
-VIC_PT001 Aireys Inlet
-VIC_PT002 Ararat
-VIC_PT003 Avalon
-...
-Sun protection recommended from 10:30 am to  2:00 pm, UV Index predicted to reach 4 [Moderate]
-```
+> Forecast output will also include min and max, depending on the time of day.
 
 ## URL's
 

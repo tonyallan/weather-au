@@ -9,23 +9,35 @@ import weather
 #        <text type="uv_alert">
 #          Sun protection recommended from 10:40 am to 2:00 pm, UV Index predicted to reach 4 [Moderate]
 
-class UvIndex:
+class UvAlert:
 
     def __init__(self, state=None):
 
         self.state = state
-        self.soup = weather.fetch_xml(weather.UV_INDEX_PRODUCT_URL[state])
+        self.soup = weather.fetch_xml(weather.UV_ALERT_PRODUCT_URL[state])
         self.identifier = self.soup.identifier.contents[0]
     
 
-    def area(self):
+    def aac_list(self):
+        # Return a dict of aac with a key of description
 
-        area_list =[]
+        aacs = {}
 
         for area in self.soup.find_all('area', {'type': 'location'}):
-            area_list.append(area.attrs)
+            aacs[area.attrs['description']] = area.attrs['aac']
 
-        return area_list
+        return aacs
+
+
+    def get_aac(self, description=None):
+        # Get an aac given the description
+
+        aacs = self.aac_list()
+
+        if description in aacs:
+            return aacs[description]
+        else:
+            return None
 
 
     def uv_alert(self, aac=None):

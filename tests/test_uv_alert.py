@@ -4,13 +4,13 @@ import pytest
 import urllib
 
 
-from weather import uv_index
+from weather import uv_alert
 
 def test_invalid_state():
     with pytest.raises(KeyError, match='zzz'):
-        obs = uv_index.UvIndex('zzz')
+        obs = uv_alert.UvAlert('zzz')
 
-obs = uv_index.UvIndex('Vic')
+obs = uv_alert.UvAlert('Vic')
 
 def test_obs():
     assert obs is not None
@@ -18,17 +18,17 @@ def test_obs():
 def test_identifier():
     assert obs.identifier == 'IDZ00112'
 
-def test_area_list():
-    forecast = obs.area()
-    assert len(forecast) > 10
+def test_aac_list():
+    aac_list = obs.aac_list()
+    assert len(aac_list) > 10
 
-    for area in forecast:
-        area_aac = area['aac']
-        assert area_aac is not None
+    for description in aac_list:
+        assert description is not None
+        assert aac_list[description] is not None
 
-        area_description = area['description']
-        assert area_description is not None
-   
+def test_get_aac():
+    assert obs.get_aac('Melbourne') == 'VIC_PT042'
+
 def test_uv_alert():
     uv = obs.uv_alert('VIC_PT042')
     assert uv is not None
