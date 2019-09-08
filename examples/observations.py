@@ -2,7 +2,7 @@ from weather import observations
 
 # Read and parse the XML file ftp://ftp.bom.gov.au/anon/gen/fwo/IDV60920.xml
 obs = observations.Observations('Vic')
-print(obs.acknowedgment)
+print(obs.acknowedgment, '\n')
 
 # <observations>
 for station in obs.stations():
@@ -17,7 +17,7 @@ for station in obs.stations():
     if air_temperature is None:
         print(f'{wmo_id} {description}')
     else:
-        print(f'{wmo_id} {description}   ({air_temperature})')
+        print(f'{wmo_id} {description}   {air_temperature}C')
 
 
 wmo_id = '95936'

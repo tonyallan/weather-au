@@ -15,6 +15,10 @@ obs = observations.Observations('Vic')
 def test_obs():
     assert obs is not None
 
+def test_acknowedgment_url():
+    assert len(obs.url) > 0
+    assert len(obs.acknowedgment) > 0
+
 def test_identifier():
     assert obs.identifier == 'IDV60920'
 

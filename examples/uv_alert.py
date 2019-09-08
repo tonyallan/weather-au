@@ -1,13 +1,15 @@
-from weather import uv_index
+from weather import uv_alert
 
-obs = uv_index.UvIndex('Vic')
-print(obs.acknowedgment)
+obs_uv = uv_alert.UvAlert('Vic')
+print(obs_uv.acknowedgment, '\n')
 
-for area in obs.area():
+aac_list = obs_uv.aac_list()
 
-    aac = area['aac']                                  
-    description = area['description']
-    print(f'{aac} {description}')
+for description in aac_list:
+    print(f'{aac_list[description]} {description}')
 
-# VIC_PT042 Melbourne
-print(obs.uv_alert('VIC_PT042'))
+
+location_name = 'Melbourne'
+uv_alert = obs_uv.uv_alert(obs_uv.get_aac(location_name))
+
+print('\nUV Alert for', location_name, uv_alert)
