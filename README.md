@@ -8,7 +8,7 @@ Currently a work in progress!
 
 ## Disclaimer
 
-This project is not related to nor is it endorsed by the Australian Bureau of Meteorology (BOM). 
+This project is not related to or endorsed by the Australian Bureau of Meteorology (BOM). 
 
 From the BOM [copyright notice](http://reg.bom.gov.au/other/copyright.shtml): Where no terms of use are associated with a set of material, then you may download, use and copy that material for personal use, or use within your organisation but you may not supply that material to any other person or use it for any commercial purpose.
 
@@ -48,6 +48,7 @@ Product ID: IDV60920
 95936 Melbourne (Olympic Park)   (10.8)
 94866 Melbourne Airport   (9.1)
 94854 Avalon   (10.2)
+...
 ```
 
 ### place
