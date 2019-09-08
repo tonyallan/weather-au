@@ -103,7 +103,9 @@ Sun protection recommended from 10:30 am to  2:00 pm, UV Index predicted to reac
 
 ## Live example
 
+<pre>
 <iframe height="400px" width="100%" src="https://repl.it/@tony_allan/weather-au?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+</pre>
 
 ## URL's
 
