@@ -1,23 +1,23 @@
-from weather import place, observations, uv_alert
+from weather import place, observations, uv_index
 
 # Parse http://www.bom.gov.au/places/vic/parkville
-obs_place = place.Place('vic', 'parkville')
-print(obs_place.acknowedgment)
+place_data = place.Place('vic', 'parkville')
+print(place_data.acknowedgment)
 
-station_id = obs_place.station_id()
+station_id = place_data.station_id()
 print('Station ID',station_id)
 
-air_temperature = obs_place.air_temperature()
+air_temperature = place_data.air_temperature()
 print('Air Temperature', air_temperature)
 
-forecast = obs_place.forecast()
+forecast = place_data.forecast()
 print('Forecast', forecast)
 
 
-obs_uv = uv_alert.UvAlert('Vic')
-print('\n' + obs_uv.acknowedgment)
+uv_data = uv_index.UvIndex('Vic')
+print('\n' + uv_data.acknowedgment)
 
 location_name = 'Melbourne'
-uv_alert = obs_uv.uv_alert(obs_uv.get_aac(location_name))
+uv_message = uv_data.uv_message(uv_data.get_aac(location_name))
 
-print('UV Alert for', location_name, uv_alert)
+print('UV Message for', location_name, uv_message)

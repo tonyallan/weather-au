@@ -8,22 +8,22 @@ from weather import observations
 
 def test_invalid_state():
     with pytest.raises(KeyError, match='zzz'):
-        obs = observations.Observations('zzz')
+        obs_data = observations.Observations('zzz')
 
-obs = observations.Observations('Vic')
+obs_data = observations.Observations('Vic')
 
 def test_obs():
-    assert obs is not None
+    assert obs_data is not None
 
 def test_acknowedgment_url():
-    assert len(obs.url) > 0
-    assert len(obs.acknowedgment) > 0
+    assert len(obs_data.url) > 0
+    assert len(obs_data.acknowedgment) > 0
 
 def test_identifier():
-    assert obs.identifier == 'IDV60920'
+    assert obs_data.identifier == 'IDV60920'
 
 def test_station_list():
-    stations = obs.stations()
+    stations = obs_data.stations()
     assert len(stations) > 10
 
     for station in stations:
@@ -33,12 +33,12 @@ def test_station_list():
         station_description = station['description']
         assert station_description is not None
 
-        station_air_temperature = obs.air_temperature(station['wmo-id'])
+        station_air_temperature = obs_data.air_temperature(station['wmo-id'])
     
 def test_air_temperature():
-    air_temperature = obs.air_temperature('95936')
+    air_temperature = obs_data.air_temperature('95936')
     assert air_temperature is not None
 
 def test_description():
     wmo_id = '95936'
-    assert obs.station_attribute(wmo_id, 'description') == 'Melbourne (Olympic Park)'
+    assert obs_data.station_attribute(wmo_id, 'description') == 'Melbourne (Olympic Park)'

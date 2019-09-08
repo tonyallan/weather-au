@@ -6,15 +6,15 @@ import weather
 #   ...
 #   <area aac="VIC_PT001" description="Aireys Inlet" type="location">
 #     <forecast-period index="0" start-time-local="2019-09-08T01:00:00+10:00" ...
-#        <text type="uv_alert">
+#        <text type="uv">
 #          Sun protection recommended from 10:40 am to 2:00 pm, UV Index predicted to reach 4 [Moderate]
 
-class UvAlert:
+class UvIndex:
 
     def __init__(self, state=None):
 
         self.state = state
-        self.url = weather.UV_ALERT_PRODUCT_URL[state]
+        self.url = weather.uv_PRODUCT_URL[state]
         self.soup = weather.fetch_xml(self.url)
         self.identifier = self.soup.identifier.contents[0]
         self.acknowedgment = f'Data courtesy of Bureau of Meteorology ({self.url})'
@@ -42,7 +42,7 @@ class UvAlert:
             return None
 
 
-    def uv_alert(self, aac=None):
+    def uv_message(self, aac=None):
 
         area = self.soup.find('area', {'type': 'location', 'aac': aac})
 
@@ -57,6 +57,10 @@ class UvAlert:
                     return text.contents[0]
 
         return None
+
+
+    def uv_solar_noon_index(self):
+        return weather.UV_INDEX_URL
 
 
     def __str__(self):

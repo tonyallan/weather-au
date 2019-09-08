@@ -31,7 +31,7 @@ OBSERVATION_PRODUCT_URL = {
     'WA':  'ftp://ftp.bom.gov.au/anon/gen/fwo/IDW60920.xml'
     }
 
-UV_ALERT_PRODUCT_URL = {
+uv_PRODUCT_URL = {
     'ACT': 'ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00107.xml',
     'NSW': 'ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00107.xml',
     'NT':  'ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00108.xml',
@@ -47,6 +47,9 @@ PLACES_URL = 'http://www.bom.gov.au/places/{state}/{location}'
 PLACES_USER_AGENT = \
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 ' \
     '(KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+
+# UV Index Forecast - Local Noon
+UV_INDEX_URL = 'http://reg.bom.gov.au/fwo/IDY00508.gif'
 
 
 # Helper functions

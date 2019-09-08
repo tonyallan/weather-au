@@ -19,7 +19,7 @@ Additional examples are in the `examples` folder.
 ### Sample for Parkville in Melbourne Vic Australia
 
 ```python3
-from weather import place, observations, uv_alert
+from weather import place, observations, uv
 
 # Parse http://www.bom.gov.au/places/vic/parkville
 obs_place = place.Place('vic', 'parkville')
@@ -35,13 +35,13 @@ forecast = obs_place.forecast()
 print('Forecast', forecast)
 
 
-obs_uv = uv_alert.UvAlert('Vic')
+obs_uv = uv.Uv('Vic')
 print('\n' + obs_uv.acknowedgment)
 
 location_name = 'Melbourne'
-uv_alert = obs_uv.uv_alert(obs_uv.get_aac(location_name))
+uv = obs_uv.uv(obs_uv.get_aac(location_name))
 
-print('UV Alert for', location_name, uv_alert)
+print('UV Alert for', location_name, uv)
 ```
 
 Produces output:
