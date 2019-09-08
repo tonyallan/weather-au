@@ -49,7 +49,7 @@ Forecast {'issued': '4:20 pm AEST on Sunday 8 September 2019', 'date': 'Rest of 
 UV Alert for Melbourne Sun protection recommended from 10:30 am to  2:00 pm, UV Index predicted to reach 4 [Moderate]
 ```
 
-> Forecast output will also include min and max, depending on the time of day.
+*Forecast output will also include min and max, depending on the time of day.*
 
 ## URL's
 
