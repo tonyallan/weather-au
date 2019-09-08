@@ -2,9 +2,7 @@ from weather import observations
 
 # Read and parse the XML file ftp://ftp.bom.gov.au/anon/gen/fwo/IDV60920.xml
 obs = observations.Observations('Vic')
-
-# Print the product ID associated with this XML file
-print(f'Product ID: {obs.identifier}\n')
+print(obs.acknowedgment)
 
 # <observations>
 for station in obs.stations():

@@ -1,8 +1,7 @@
 from weather import uv_index
 
 obs = uv_index.UvIndex('Vic')
-
-print(f'Product ID: {obs.identifier}\n')
+print(obs.acknowedgment)
 
 for area in obs.area():
 

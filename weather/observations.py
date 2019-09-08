@@ -7,8 +7,10 @@ class Observations:
     def __init__(self, state=None):
 
         self.state = state
-        self.soup = weather.fetch_xml(weather.OBSERVATION_PRODUCT_URL[state])
+        self.url = weather.OBSERVATION_PRODUCT_URL[state]
+        self.soup = weather.fetch_xml(self.url)
         self.identifier = self.soup.identifier.contents[0]
+        self.acknowedgment = f'Data courtesy of Bureau of Meteorology ({self.url})'
     
 
     def stations(self):

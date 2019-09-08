@@ -14,8 +14,10 @@ class UvAlert:
     def __init__(self, state=None):
 
         self.state = state
-        self.soup = weather.fetch_xml(weather.UV_ALERT_PRODUCT_URL[state])
+        self.url = weather.UV_ALERT_PRODUCT_URL[state]
+        self.soup = weather.fetch_xml(self.url)
         self.identifier = self.soup.identifier.contents[0]
+        self.acknowedgment = f'Data courtesy of Bureau of Meteorology ({self.url})'
     
 
     def aac_list(self):

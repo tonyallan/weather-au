@@ -14,6 +14,8 @@ From the BOM [copyright notice](http://reg.bom.gov.au/other/copyright.shtml): Wh
 
 ## Usage
 
+Additional examples are in the `examples` folder.
+
 ### Sample for Parkville in Melbourne Vic Australia
 
 ```python3
@@ -21,35 +23,39 @@ from weather import place, observations, uv_alert
 
 # Parse http://www.bom.gov.au/places/vic/parkville
 obs_place = place.Place('vic', 'parkville')
+print(obs_place.acknowedgment)
 
 station_id = obs_place.station_id()
-print('\nStation ID',station_id)
+print('Station ID',station_id)
 
 air_temperature = obs_place.air_temperature()
 print('Air Temperature', air_temperature)
 
 forecast = obs_place.forecast()
-print('\nForecast', forecast)
+print('Forecast', forecast)
+
 
 obs_uv = uv_alert.UvAlert('Vic')
+print('\n' + obs_uv.acknowedgment)
 
 location_name = 'Melbourne'
 uv_alert = obs_uv.uv_alert(obs_uv.get_aac(location_name))
 
-print('\nUV Alert for', location_name, uv_alert)
+print('UV Alert for', location_name, uv_alert)
 ```
 
 Produces output:
 ```
+Data courtesy of Bureau of Meteorology (http://www.bom.gov.au/places/vic/parkville)
 Station ID 95936
-Air Temperature 9.6
-
+Air Temperature 9.3
 Forecast {'issued': '4:20 pm AEST on Sunday 8 September 2019', 'date': 'Rest of Sunday', 'precis': 'Showers easing. Windy.'}
 
+Data courtesy of Bureau of Meteorology (ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00112.xml)
 UV Alert for Melbourne Sun protection recommended from 10:30 am to  2:00 pm, UV Index predicted to reach 4 [Moderate]
 ```
 
-*Forecast output will also include min and max, depending on the time of day.*
+*The Forecast dict may also include min and max, depending on the time of day.*
 
 ## URL's
 

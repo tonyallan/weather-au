@@ -16,6 +16,7 @@ class Place:
         # Will raise urllib.error.HTTPError if state or place not found
 
         self.url = weather.PLACES_URL.format(state=state, location=location)
+        self.acknowedgment = f'Data courtesy of Bureau of Meteorology ({self.url})'
 
         req = urllib.request.Request(self.url, data=None, headers={'User-Agent': weather.PLACES_USER_AGENT})
         page_html = urllib.request.urlopen(req).read()
