@@ -49,7 +49,7 @@ Produces output:
 Data courtesy of Bureau of Meteorology (http://www.bom.gov.au/places/vic/parkville)
 Station ID 95936
 Air Temperature 8.6
-Forecast {'issued': '4:20 pm AEST on Sunday 8 September 2019', 'date': 'Rest of Sunday', 'precis': 'Showers easing. Windy.'}
+Forecast {'issued': '4:20 pm AEST on Sunday 8 September 2019', 'date': 'Rest of Monday', 'min': '8', 'max': '13', 'precis': 'Showers easing. Wind easing.'}
 
 Data courtesy of Bureau of Meteorology (ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00112.xml)
 UV Message for Melbourne Sun protection recommended from 10:30 am to  2:00 pm, UV Index predicted to reach 4 [Moderate]
