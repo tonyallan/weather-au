@@ -101,6 +101,10 @@ VIC_PT003 Avalon
 Sun protection recommended from 10:30 am to  2:00 pm, UV Index predicted to reach 4 [Moderate]
 ```
 
+## Live example
+
+<iframe height="400px" width="100%" src="https://repl.it/@tony_allan/weather-au?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+
 ## URL's
 
 - Base for anon FTP data `ftp://ftp.bom.gov.au/anon/gen/`
