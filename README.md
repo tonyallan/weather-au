@@ -19,40 +19,40 @@ Additional examples are in the `examples` folder.
 ### Sample for Parkville in Melbourne Vic Australia
 
 ```python3
-from weather import place, observations, uv
+from weather import place, observations, uv_index
 
 # Parse http://www.bom.gov.au/places/vic/parkville
-obs_place = place.Place('vic', 'parkville')
-print(obs_place.acknowedgment)
+place_data = place.Place('vic', 'parkville')
+print(place_data.acknowedgment)
 
-station_id = obs_place.station_id()
+station_id = place_data.station_id()
 print('Station ID',station_id)
 
-air_temperature = obs_place.air_temperature()
+air_temperature = place_data.air_temperature()
 print('Air Temperature', air_temperature)
 
-forecast = obs_place.forecast()
+forecast = place_data.forecast()
 print('Forecast', forecast)
 
 
-obs_uv = uv.Uv('Vic')
-print('\n' + obs_uv.acknowedgment)
+uv_data = uv_index.UvIndex('Vic')
+print('\n' + uv_data.acknowedgment)
 
 location_name = 'Melbourne'
-uv = obs_uv.uv(obs_uv.get_aac(location_name))
+uv_message = uv_data.uv_message(uv_data.get_aac(location_name))
 
-print('UV Alert for', location_name, uv)
+print('UV Message for', location_name, uv_message)
 ```
 
 Produces output:
 ```
 Data courtesy of Bureau of Meteorology (http://www.bom.gov.au/places/vic/parkville)
 Station ID 95936
-Air Temperature 9.3
+Air Temperature 8.6
 Forecast {'issued': '4:20 pm AEST on Sunday 8 September 2019', 'date': 'Rest of Sunday', 'precis': 'Showers easing. Windy.'}
 
 Data courtesy of Bureau of Meteorology (ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00112.xml)
-UV Alert for Melbourne Sun protection recommended from 10:30 am to  2:00 pm, UV Index predicted to reach 4 [Moderate]
+UV Message for Melbourne Sun protection recommended from 10:30 am to  2:00 pm, UV Index predicted to reach 4 [Moderate]
 ```
 
 *The Forecast dict may also include min and max, depending on the time of day.*
