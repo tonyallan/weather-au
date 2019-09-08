@@ -40,6 +40,7 @@ for station in obs.stations():
         print(f'{wmo_id} {description}   ({air_temperature})')
 ```
 
+Produces output:
 ```
 Product ID: IDV60920
 
@@ -62,6 +63,7 @@ station_id = obsp.station_id()
 print(f'Station ID: {station_id}\nAir Temperature: {air_temperature}')
 ```
 
+Produces output:
 ```
 Station ID: 95936
 Air Temperature: 10.8
@@ -86,6 +88,7 @@ for area in obs.area():
 print(obs.uv_alert('VIC_PT042'))
 ```
 
+Produces output:
 ```
 Product ID: IDZ00112
 
