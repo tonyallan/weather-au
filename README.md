@@ -13,30 +13,87 @@ From the BOM [copyright notice](http://reg.bom.gov.au/other/copyright.shtml): Wh
 
 ## Usage
 
-```python3
-from weather import observations, place
+### observations
 
+```python3
+from weather import observations
+
+# Read and parse the XML file ftp://ftp.bom.gov.au/anon/gen/fwo/IDV60920.xml
 obs = observations.Observations('Vic')
 
+# Print the product ID associated with this XML file
 print(f'Product ID: {obs.identifier}\n')
 
+# <observations>
 for station in obs.stations():
 
+    # <station wmo-id="95936" ... description="Melbourne (Olympic Park)">
     wmo_id = station['wmo-id']                                  
     description = station['description']
 
+    # <element units="Celsius" type="air_temperature">9.8</element>
     air_temperature = obs.air_temperature(station['wmo-id'])
+
     if air_temperature is None:
         print(f'{wmo_id} {description}')
     else:
         print(f'{wmo_id} {description}   ({air_temperature})')
+```
 
+```
+Product ID: IDV60920
+
+95936 Melbourne (Olympic Park)   (10.8)
+94866 Melbourne Airport   (9.1)
+94854 Avalon   (10.2)
+```
+
+### place
+
+```python3
+from weather import place
+
+# Parse http://www.bom.gov.au/places/vic/parkville
 obsp = place.Place('vic', 'parkville')
 
 air_temperature = obsp.air_temperature()
 station_id = obsp.station_id()
 
-print(f'\n{station_id} {air_temperature}')
+print(f'Station ID: {station_id}\nAir Temperature: {air_temperature}')
+```
+
+```
+Station ID: 95936
+Air Temperature: 10.8
+```
+
+### uv_index
+
+```python3
+from weather import uv_index
+
+obs = uv_index.UvIndex('Vic')
+
+print(f'Product ID: {obs.identifier}\n')
+
+for area in obs.area():
+
+    aac = area['aac']                                  
+    description = area['description']
+    print(f'{aac} {description}')
+
+# VIC_PT042 Melbourne
+print(obs.uv_alert('VIC_PT042'))
+```
+
+```
+Product ID: IDZ00112
+
+VIC_PT001 Aireys Inlet
+VIC_PT002 Ararat
+VIC_PT003 Avalon
+...
+Sun protection recommended from 10:30 am to  2:00 pm, UV Index predicted to reach 4 [Moderate]
 ```
 
 ## URL's
