@@ -1,4 +1,4 @@
-from weather import observations
+from weather_au import observations
 
 # Read and parse the XML file ftp://ftp.bom.gov.au/anon/gen/fwo/IDV60920.xml
 obs_data = observations.Observations('Vic')

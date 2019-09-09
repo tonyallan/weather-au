@@ -4,7 +4,7 @@ import pytest
 import urllib
 
 
-from weather import observations
+from weather_au import observations
 
 def test_invalid_state():
     with pytest.raises(KeyError, match='zzz'):

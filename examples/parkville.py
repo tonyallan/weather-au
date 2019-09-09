@@ -1,4 +1,4 @@
-from weather import place, observations, uv_index
+from weather_au import place, observations, uv_index
 
 # Parse http://www.bom.gov.au/places/vic/parkville
 place_data = place.Place('vic', 'parkville')

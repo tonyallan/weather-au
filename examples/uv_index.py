@@ -1,4 +1,4 @@
-from weather import uv_index
+from weather_au import uv_index
 
 uv_data = uv_index.UvIndex('Vic')
 print(uv_data.acknowedgment, '\n')

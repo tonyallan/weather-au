@@ -1,4 +1,4 @@
-import weather
+import weather_au
 
 # https://lxml.de/elementsoup.html
 
@@ -14,8 +14,8 @@ class UvIndex:
     def __init__(self, state=None):
 
         self.state = state
-        self.url = weather.uv_PRODUCT_URL[state]
-        self.soup = weather.fetch_xml(self.url)
+        self.url = weather_au.uv_PRODUCT_URL[state]
+        self.soup = weather_au.fetch_xml(self.url)
         self.identifier = self.soup.identifier.contents[0]
         self.acknowedgment = f'Data courtesy of Bureau of Meteorology ({self.url})'
     
@@ -60,7 +60,7 @@ class UvIndex:
 
 
     def uv_solar_noon_index(self):
-        return weather.UV_INDEX_URL
+        return weather_au.UV_INDEX_URL
 
 
     def __str__(self):

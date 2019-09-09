@@ -3,7 +3,7 @@ import urllib.request
 
 from bs4 import BeautifulSoup
 
-import weather
+import weather_au
 
 
 class PlaceException(Exception):
@@ -15,10 +15,10 @@ class Place:
         # See http://www.bom.gov.au/places/ to search for valid locations.
         # Will raise urllib.error.HTTPError if state or place not found
 
-        self.url = weather.PLACES_URL.format(state=state, location=location)
+        self.url = weather_au.PLACES_URL.format(state=state, location=location)
         self.acknowedgment = f'Data courtesy of Bureau of Meteorology ({self.url})'
 
-        req = urllib.request.Request(self.url, data=None, headers={'User-Agent': weather.PLACES_USER_AGENT})
+        req = urllib.request.Request(self.url, data=None, headers={'User-Agent': weather_au.PLACES_USER_AGENT})
         page_html = urllib.request.urlopen(req).read()
 
         self.soup = BeautifulSoup(page_html, 'html.parser')

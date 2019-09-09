@@ -1,4 +1,4 @@
-import weather
+import weather_au
 
 # https://docs.python.org/3/library/xml.dom.html#module-xml.dom
 
@@ -7,8 +7,8 @@ class Observations:
     def __init__(self, state=None):
 
         self.state = state
-        self.url = weather.OBSERVATION_PRODUCT_URL[state]
-        self.soup = weather.fetch_xml(self.url)
+        self.url = weather_au.OBSERVATION_PRODUCT_URL[state]
+        self.soup = weather_au.fetch_xml(self.url)
         self.identifier = self.soup.identifier.contents[0]
         self.acknowedgment = f'Data courtesy of Bureau of Meteorology ({self.url})'
     

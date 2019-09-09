@@ -4,7 +4,7 @@ import pytest
 import urllib
 
 
-from weather import place
+from weather_au import place
 
 def test_404():
     with pytest.raises(urllib.error.HTTPError, match='HTTP Error 404: Not Found'):
