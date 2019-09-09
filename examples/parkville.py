@@ -8,7 +8,7 @@ station_id = place_data.station_id()
 print('Station ID',station_id)
 
 air_temperature = place_data.air_temperature()
-print('Air Temperature', air_temperature)
+print('Air Temperature', air_temperature, '°C')
 
 forecast = place_data.forecast()
 print('Forecast', forecast)

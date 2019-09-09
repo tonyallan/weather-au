@@ -17,7 +17,7 @@ for station in obs_data.stations():
     if air_temperature is None:
         print(f'{wmo_id} {description}')
     else:
-        print(f'{wmo_id} {description}   {air_temperature}C')
+        print(f'{wmo_id} {description}   {air_temperature}°C')
 
 
 wmo_id = '95936'

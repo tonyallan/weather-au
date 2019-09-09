@@ -43,6 +43,7 @@ uv_PRODUCT_URL = {
     }
 
 PLACES_URL = 'http://www.bom.gov.au/places/{state}/{location}'
+M_PLACES_URL = 'http://m.bom.gov.au/{state}/{location}'
 
 PLACES_USER_AGENT = \
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 ' \
