@@ -4,7 +4,26 @@ Access to the Australian [Bureau of Meteorology](https://bom.gov.au/) weather da
 [![Actions Status](https://github.com/tonyallan/weather-au/workflows/build/badge.svg)](https://github.com/tonyallan/weather-au/actions)
 ![PyPI](https://img.shields.io/pypi/v/weather-au)
 
-Currently a work in progress!
+Currently a work in progress subject to frequent breaking changes!
+
+## Purpose
+
+The purpose of these modules is to fetch weather data from various Australian Bureau of Meteorology websites.
+
+### `weather_au_api` Beta JSON API
+
+Fetch data from the beta API's at `api.weather.bom.gov.au` (e.g. [Parkville 3-hourly forecast](https://api.weather.bom.gov.au/v1/locations/r1r143/forecasts/3-hourly)).
+
+This information has been reverse engineered from the [beta website](https://weather.bom.gov.au/) with no information about future access arrangements, content or availability.
+
+### `weather_au` XML and Scraping
+
+Modules:
+
+- `observations` - fetch XML formatted data from the BOM FTP server.
+- `uv_index` - fetch the UV data from the XML encoded state based IDZ00107-IDZ00113 products.
+- `place` - scrape data from location based [pages](http://www.bom.gov.au/places/vic/parkville/).
+
 
 ## Disclaimer
 
