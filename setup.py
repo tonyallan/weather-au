@@ -8,7 +8,7 @@ setuptools.setup(
     version="0.0.5",
     author="Tony Allan",
     author_email="tony@apms.com.au",
-    description="Australian Weather Data (using bom.gov.au)",
+    description="Australian Weather Data (from bom.gov.au)",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/tonyallan/weather-au",

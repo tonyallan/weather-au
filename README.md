@@ -4,19 +4,60 @@ Access to the Australian [Bureau of Meteorology](https://bom.gov.au/) weather da
 [![Actions Status](https://github.com/tonyallan/weather-au/workflows/build/badge.svg)](https://github.com/tonyallan/weather-au/actions)
 ![PyPI](https://img.shields.io/pypi/v/weather-au)
 
-Currently a work in progress subject to frequent breaking changes!
+Currently a work in progress subject to breaking changes!
+
+
 
 ## Purpose
 
 The purpose of these modules is to fetch weather data from various Australian Bureau of Meteorology websites.
 
-### `weather_au_api` Beta JSON API
 
-Fetch data from the beta API's at `api.weather.bom.gov.au` (e.g. [Parkville 3-hourly forecast](https://api.weather.bom.gov.au/v1/locations/r1r143/forecasts/3-hourly)).
+
+## Weather API
+
+Fetches data from the API's at `api.weather.bom.gov.au` (e.g. [Parkville 3-hourly forecast](https://api.weather.bom.gov.au/v1/locations/r1r143/forecasts/3-hourly)).
 
 This information has been reverse engineered from the [beta website](https://weather.bom.gov.au/) with no information about future access arrangements, content or availability.
 
-### `weather_au` XML and Scraping
+
+### Example using `WeatherApi`
+```python3
+from weather_au import api
+
+w = api.WeatherApi(search='parkville+vic', debug=0)
+
+location = w.location()
+print(f"\nLocation: {location['name']} {location['state']}, timezone:{location['timezone']}\n")
+
+for warn in w.warnings():
+    print(f"Warning short title:  {warn['short_title']}")
+
+    warning = w.warning(id=warn['id'])
+    print(f"Warning title:        {warning['title']}")
+
+observations = w.observations()
+print(f"\nObservations (temp): {observations['temp']:2}")
+
+forecast_rain = w.forecast_rain()
+print(f"Forecast Rain:       amount:{forecast_rain['amount']}, chance:{forecast_rain['chance']}")
+
+print('\n3 Hourly:')
+for f in w.forecasts_3hourly():
+    print(f"{f['time']} temp:{f['temp']:2}, {f['icon_descriptor']}")
+```
+
+
+### Example using `Summary`
+```python3
+from weather_au import summary
+
+print(summary.Summary(search='parkville+vic'))
+```
+
+
+
+## XML and Scraping
 
 Modules:
 
@@ -24,16 +65,6 @@ Modules:
 - `uv_index` - fetch the UV data from the XML encoded state based IDZ00107-IDZ00113 products.
 - `place` - scrape data from location based [pages](http://www.bom.gov.au/places/vic/parkville/).
 
-
-## Disclaimer
-
-This project is not related to or endorsed by the Australian Bureau of Meteorology (BOM). 
-
-From the BOM [copyright notice](http://reg.bom.gov.au/other/copyright.shtml): Where no terms of use are associated with a set of material, then you may download, use and copy that material for personal use, or use within your organisation but you may not supply that material to any other person or use it for any commercial purpose.
-
-## Usage
-
-Additional examples are in the `examples` folder.
 
 ### Sample for Parkville in Melbourne Vic Australia
 
@@ -63,18 +94,21 @@ uv_message = uv_data.uv_message(uv_data.get_aac(location_name))
 print('UV Message for', location_name, uv_message)
 ```
 
-Produces output:
-```
-Data courtesy of Bureau of Meteorology (http://www.bom.gov.au/places/vic/parkville)
-Station ID 95936
-Air Temperature 8.6
-Forecast {'issued': '4:20 pm AEST on Sunday 8 September 2019', 'date': 'Rest of Monday', 'min': '8', 'max': '13', 'precis': 'Showers easing. Wind easing.'}
 
-Data courtesy of Bureau of Meteorology (ftp://ftp.bom.gov.au/anon/gen/fwo/IDZ00112.xml)
-UV Message for Melbourne Sun protection recommended from 10:30 am to  2:00 pm, UV Index predicted to reach 4 [Moderate]
-```
 
-*The Forecast dict may also include min and max, depending on the time of day.*
+## Disclaimer
+
+This project is not related to or endorsed by the Australian Bureau of Meteorology (BOM). 
+
+From the BOM [copyright notice](http://reg.bom.gov.au/other/copyright.shtml): Where no terms of use are associated with a set of material, then you may download, use and copy that material for personal use, or use within your organisation but you may not supply that material to any other person or use it for any commercial purpose.
+
+
+
+## Usage
+
+Additional examples are in the `examples` folder.
+
+
 
 ## URL's
 
@@ -85,8 +119,11 @@ UV Message for Melbourne Sun protection recommended from 10:30 am to  2:00 pm, U
 - Weather Observations - VIC - Melbourne (Olympic Park) `http://www.bom.gov.au/fwo/IDV60910/IDV60910.95936.json`
 - `http://www.bom.gov.au/places/vic/parkville/`
 
+
+
 ## Resources
 
+1. [New weather page](https://weather.bom.gov.au/)
 1. [FTP public products](http://www.bom.gov.au/catalogue/anon-ftp.shtml)
 1. [Weather Data Services](http://www.bom.gov.au/catalogue/data-feeds.shtml)
 1. [How to use BOM API for weather, tide and swell](https://stackoverflow.com/questions/39534018/how-to-use-bom-api-for-weather-tide-and-swell)
