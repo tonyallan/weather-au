@@ -1,5 +1,3 @@
-import os, sys
-sys.path.append(os.path.abspath('.'))
 from weather_au import place
 
 # Parse http://www.bom.gov.au/places/vic/parkville
