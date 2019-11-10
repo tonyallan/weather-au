@@ -94,6 +94,9 @@ class WeatherApi:
         if search == '':
             return []
 
+        # The search API doesn't like the dash character.
+        search = search.replace('-', '+')
+
         data = self._fetch_json(f'{self.API_BASE}/{self.SEARCH}{search}')
 
         if len(data['data']) > select:
@@ -108,18 +111,27 @@ class WeatherApi:
     def api(self, api=None, type='locations'):
         # type is locations (with geohash) or warnings (without)
         if type == 'locations':
-            return self._fetch_json('/'.join(filter(None, [self.API_BASE, type, self.geohash, api])))
+
+            if self.geohash is None:
+                return None
+
+            result = self._fetch_json('/'.join(filter(None, [self.API_BASE, type, self.geohash, api])))
+
         else:
-            return self._fetch_json('/'.join(filter(None, [self.API_BASE, type, api])))
+            result = self._fetch_json('/'.join(filter(None, [self.API_BASE, type, api])))
+
+        if 'data' in result:
+            return result['data']
+
+        return None
 
 
     def location(self):
         """
         Example https://api.weather.bom.gov.au/v1/locations/r1r143n
 
-        data:{geohash, id, name, state, latitude, longitude, timezone}
-        or
-        data:None
+        {geohash, id, name, state, latitude, longitude, timezone}
+        or None
         
         id          e.g. 'Parkville (Vic.)-r1r143n'
         name        e.g. 'Parkville'
@@ -128,14 +140,15 @@ class WeatherApi:
         longitude   e.g. 144.95155334472656
         timezone    e.g. 'Australia/Melbourne'
         """
-        return self.api()['data']
+        return self.api()
 
 
     def warnings(self):
         """
         Example https://api.weather.bom.gov.au/v1/locations/r1r143/warnings
 
-        data:[{id, state, expiry_time, issue_time, type, short_title, warning_group_type, phase}]
+        [{id, state, expiry_time, issue_time, type, short_title, warning_group_type, phase}]
+        or None
         
         id is a product ID, e.g. 'IDV29000'
         type                e.g. 'sheep_graziers_warning'
@@ -143,15 +156,16 @@ class WeatherApi:
         warning_group_type  e.g. 'minor'
         phase               e.g. 'cancelled'
         """
-        return self.api('warnings')['data']
+        return self.api('warnings')
 
 
     def warning(self, id=None):
         """
         Example https://api.weather.bom.gov.au/v1/warnings/IDV29000
 
-        data:[{id, state, expiry_time, issue_time, type, short_title, warning_group_type, phase}]
-        data:{id, title, state, expiry_time, issue_time, type, short_title, message, phase}}
+        [{id, state, expiry_time, issue_time, type, short_title, warning_group_type, phase}]
+        {id, title, state, expiry_time, issue_time, type, short_title, message, phase}}
+        or None
         
         id is a product ID, e.g. 'IDV29000'
         title               e.g. 'Sheep Graziers Warning for North Central forecast district'
@@ -160,44 +174,46 @@ class WeatherApi:
         message             e.g. '<div class="product">\n<p class="p-id">IDV29000</p> ... \n</div>\n'
         phase               e.g. 'cancelled'
         """
-        return self.api(id, type='warnings')['data']
+        return self.api(id, type='warnings')
 
 
     def observations(self):
         """
         Example https://api.weather.bom.gov.au/v1/locations/r1r143/observations
 
-        data:{temp, 
+        {temp, 
               temp_feels_like, 
               wind:{speed_kilometre, speed_knot, direction},
               rain_since_9am,
               humidity,
               station:{bom_id, name, distance}
             }
+        or None
         
         station bom_id      e.g. '086338'
                 name        e.g. 'Melbourne (Olympic Park)'
                 distance    e.g. 5401    [metre]
         """
-        return self.api('observations')['data']
+        return self.api('observations')
 
 
     def forecast_rain(self):
         """
         Example https://api.weather.bom.gov.au/v1/locations/r1r143/forecast/rain
 
-        data:{amount, chance, start_time, period}
+        {amount, chance, start_time, period}
+        or None
 
         The definition of period is not clear, e.g. 'PT1H'
         """
-        return self.api('forecast/rain')['data']
+        return self.api('forecast/rain')
 
 
     def forecasts_daily(self):
         """
         Example https://api.weather.bom.gov.au/v1/locations/r1r143/forecasts/daily
 
-        data:[{rain:{amount:{max, min, units}, chance},
+        [{rain:{amount:{max, min, units}, chance},
                uv:{category, end_time, max_index, start_time},
                astronomical:{sunrise_time, sunset_time},
                date,
@@ -209,20 +225,21 @@ class WeatherApi:
                fire_danger,
                now:{is_night, now_label, later_label, temp_now, temp_later}
             },]
+        or None
 
         now_label   e.g. 'Overnight Min'
         later_label e.g. 'Tomorrow's Max'
 
         Observed 8 elements in the list. Might be 7 elements in the list sometimes?
         """
-        return self.api('forecasts/daily')['data']
+        return self.api('forecasts/daily')
 
 
     def forecasts_3hourly(self):
         """
         Example https://api.weather.bom.gov.au/v1/locations/r1r143/forecasts/3-hourly
 
-        data:[{rain:{amount:{min, max, units}, chance},
+        [{rain:{amount:{min, max, units}, chance},
                temp,
                wind:{speed_knot, speed_kilometre, direction},
                icon_descriptor,
@@ -230,6 +247,7 @@ class WeatherApi:
                is_night,
                next_forecast_period
             },]
+        or None
 
         wind direction  .e.g 'WSW'
 
@@ -237,7 +255,7 @@ class WeatherApi:
 
         A six character geohash is expected.
         """
-        return self.api('forecasts/3-hourly')['data']
+        return self.api('forecasts/3-hourly')
 
 
     def __repr__(self):
@@ -247,6 +265,11 @@ class WeatherApi:
         else:
             loc = f"{self._location['name']} {self._location['state']}"
 
-        return f"WeatherApi(geohash='{self.geohash}', search='{loc}', debug={self.debug}), " + \
+        if self.geohash is None:
+            geohash = 'None'
+        else:
+            geohash = "'" + self.geohash + "'"
+
+        return f"WeatherApi(geohash={geohash}, search='{loc}', debug={self.debug}), " + \
             f"timestamp={self.response_timestamp}"
 
