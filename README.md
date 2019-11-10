@@ -23,11 +23,17 @@ This information has been reverse engineered from the [beta website](https://wea
 
 ### Example using `WeatherApi`
 ```python3
+import sys
 from weather_au import api
 
 w = api.WeatherApi(search='parkville+vic', debug=0)
 
 location = w.location()
+
+# check if the search produced a result (other methods will also return None if the search fails).
+if location is None:
+    sys.exit('Search failed for location ' + loc)
+
 print(f"\nLocation: {location['name']} {location['state']}, timezone:{location['timezone']}\n")
 
 for warn in w.warnings():
