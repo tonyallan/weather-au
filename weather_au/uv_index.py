@@ -53,7 +53,7 @@ class UvIndex:
             if forecast_period is not None:
                 text = forecast_period.find('text', {'type': 'uv_alert'})
 
-                if text is not None:
+                if text is not None and len(text.contents) > 0:
                     return text.contents[0]
 
         return None

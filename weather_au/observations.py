@@ -49,8 +49,8 @@ class Observations:
         if elements is not None:
             air_temperature_el = elements.find('element', {'type': 'air_temperature'})
 
-            if air_temperature_el is not None:
-                return air_temperature_el.contents[0]
+            if air_temperature_el is not None and len(air_temperature_el.contents) > 0:
+                    return air_temperature_el.contents[0]
 
         return None
 

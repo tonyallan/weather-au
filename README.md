@@ -65,6 +65,8 @@ Modules:
 - `uv_index` - fetch the UV data from the XML encoded state based IDZ00107-IDZ00113 products.
 - `place` - scrape data from location based [pages](http://www.bom.gov.au/places/vic/parkville/).
 
+Where possible WeatherApi, should be used as it uses an API rather than scraping the web page.
+
 
 ### Sample for Parkville in Melbourne Vic Australia
 

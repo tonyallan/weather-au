@@ -25,7 +25,7 @@ def test_station_id():
     assert station_id is not None
     assert len(station_id) == 5
 
-def test_forecast():
+def test_forecast_parkville():
     forecast = place_data.forecast()
     assert 'issued' in forecast
     assert 'date' in forecast
@@ -36,3 +36,11 @@ def test_air_temperature():
     assert air_temperature is not None
     assert air_temperature > -30.0
     assert air_temperature < 60.0
+
+place_data2 = place.Place('vic', 'endeavour-hills')
+
+def test_forecast_endeavour_hills():
+    forecast = place_data2.forecast()
+    assert 'issued' in forecast
+    assert 'date' in forecast
+    #assert 'precis' in forecast

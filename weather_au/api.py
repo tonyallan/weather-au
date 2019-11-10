@@ -68,7 +68,6 @@ class WeatherApi:
 
     def search(self, search='', select=0):
         """
-
         Returns search result list or [] if no matches or if the search string was ''.
 
         Example https://api.weather.bom.gov.au/v1/locations?search=3130
@@ -119,6 +118,8 @@ class WeatherApi:
         Example https://api.weather.bom.gov.au/v1/locations/r1r143n
 
         data:{geohash, id, name, state, latitude, longitude, timezone}
+        or
+        data:None
         
         id          e.g. 'Parkville (Vic.)-r1r143n'
         name        e.g. 'Parkville'
@@ -126,7 +127,7 @@ class WeatherApi:
         latitude    e.g. -37.78678894042969
         longitude   e.g. 144.95155334472656
         timezone    e.g. 'Australia/Melbourne'
-       """
+        """
         return self.api()['data']
 
 

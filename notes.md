@@ -10,6 +10,8 @@ python3 setup.py sdist bdist_wheel
 python3 -m twine upload dist/*
 ```
 
+`twine` will ask for the PyPi username and password.
+
 
 ### Test on repl.it
 
@@ -32,4 +34,10 @@ The following code is added to example to ease local testing:
 ```
 import os, sys
 sys.path.append(os.path.abspath('.'))
+```
+
+To run the tests, cd to the weater-au folder and run:
+
+```
+pytest
 ```

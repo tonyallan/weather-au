@@ -1,3 +1,8 @@
+import os, sys
+sys.path.append(os.path.abspath('.'))
+
 from weather_au import summary
 
-print(summary.Summary(search='parkville+vic'))
+w = summary.Summary(search='parkville+vic')
+
+print(w.summary_text())
