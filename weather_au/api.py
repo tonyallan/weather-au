@@ -4,18 +4,19 @@ import urllib.request
 class WeatherApi:
     """ Australian Weather Data API
 
-    These API's have been reverse engineered from their usage in the web page
+    These BOM API's have been reverse engineered from their usage in the web page
     https://weather.bom.gov.au/
 
-    There are two sets to use this API. Thie first is to find and set a location 
+    There are two steps to use this API. Thie first is to find and set a location 
     and the second is to call the API which returns JSON data.
 
-    With a Suburb and state or a post code, the first results is almost always 
-    the correct one.
+    With a valid suburb and state or a post code, the first results is almost always 
+    the correct one. if a match is not found
 
     The website seems to be refreshing data every 10 minutes.
 
-    Each API returns a two-element dictionary - metadata and data. Data is returned.
+    Each API returns a two-element dictionary - metadata and data. Data is returned by the
+    methods in this class.
 
     Data is in metric units unless otherwise indicated.
 
@@ -58,7 +59,14 @@ class WeatherApi:
 
         req = urllib.request.Request(url)
 
-        json_text = urllib.request.urlopen(req).read().decode('utf-8')
+        try:
+            resp = urllib.request.urlopen(req)
+
+        except urllib.error.HTTPError as e:
+            if e.code in [400, 500]:
+                return None
+
+        json_text = resp.read().decode('utf-8')
         result =  json.loads(json_text)
 
         self.response_timestamp = result['metadata']['response_timestamp']
@@ -68,7 +76,7 @@ class WeatherApi:
 
     def search(self, search='', select=0):
         """
-        Returns search result list or [] if no matches or if the search string was ''.
+        Returns search result list or None if no matches or if the search string was ''.
 
         Example https://api.weather.bom.gov.au/v1/locations?search=3130
                 https://api.weather.bom.gov.au/v1/locations?search=Parkville+VIC
@@ -76,9 +84,11 @@ class WeatherApi:
         Multiple matching records are returned. If suburb and state are specified then
         selecting the first element should be sufficient.
 
-        If no match is found an empty list is returned and self.gohash is None.
+        If no match is found [] is returned and self.gohash is set to None.
+        Further method calls will return None if called after an invalid location was used.
         
-        data:[{geohash, id, name, postcode, state},]
+        [{geohash, id, name, postcode, state},]
+        or None
 
         geohash     e.g. 'r1r143n'
         id          e.g. 'Parkville (Vic.)-r1r143n'
@@ -87,17 +97,36 @@ class WeatherApi:
 
         Location is returned as a 6 character precision geohash such as '1r143n'.
         (https://en.wikipedia.org/wiki/Geohash)
+
+        The following error messages are possible using the location search API 
+        (each will return None):
+
+        https://api.weather.bom.gov.au/v1/locations?search= ->
+            {"errors":[{"code":"WEATHER-400","status":"400","title":"Invalid search query",
+            "detail":"Invalid search query string."}]}
+
+        https://api.weather.bom.gov.au/v1/locations?search=zzz ->
+        https://api.weather.bom.gov.au/v1/locations/?search=123456789012345678901234567890 ->
+            {"metadata":{"response_timestamp":"2019-11-10T16:02:26Z"},"data":[]}
+
+        https://api.weather.bom.gov.au/v1/locations?search=------ ->
+            {"errors":[{"code":"WEATHER-500","status":"500","title":"Internal Error",
+            "detail":"Cannot read property 'data' of null"}]}
         """
+
         self._location = None
         self.geohash = None
 
         if search == '':
-            return []
+            return None
 
         # The search API doesn't like the dash character.
         search = search.replace('-', '+')
 
         data = self._fetch_json(f'{self.API_BASE}/{self.SEARCH}{search}')
+
+        if data is None:
+            return None
 
         if len(data['data']) > select:
             self._location = data['data'][select]
@@ -109,16 +138,44 @@ class WeatherApi:
 
 
     def api(self, api=None, type='locations'):
-        # type is locations (with geohash) or warnings (without)
+        """
+        type is locations (with geohash) or warnings (without).
+
+        None is returned if a valid location has not been set.
+
+        The following error messages are possible using the location API (each will return None):
+
+        https://api.weather.bom.gov.au/v1/locations/ -> 
+            {"errors":[{"code":"WEATHER-500","status":"500","title":"Internal Error",
+            "detail":"Cannot read property 'search' of null"}]}
+
+        https://api.weather.bom.gov.au/v1/locations/zzz ->
+        https://api.weather.bom.gov.au/v1/locations/zzzzzz ->
+            {"errors":[{"code":"WEATHER-400","status":"400","title":"Invalid Geohash",
+            "detail":"The geohash string was not 6-7 character."}]}
+
+        https://api.weather.bom.gov.au/v1/locations/zzzzzz ->
+            {"errors":[{"code":"WEATHER-400","status":"400","title":"Invalid Geohash",
+            "detail":"Outside of allowed area."}]}
+
+        https://api.weather.bom.gov.au/v1/locations/****** ->
+            {"errors":[{"code":"WEATHER-400","status":"400","title":"Invalid Geohash",
+            "detail":"Valid geohash characters must be used."}]}
+        """
+
         if type == 'locations':
 
-            if self.geohash is None:
+            # locations API will return a server 500 if no location is specified so just return None
+            if self.geohash is None or self.geohash is '':
                 return None
 
             result = self._fetch_json('/'.join(filter(None, [self.API_BASE, type, self.geohash, api])))
 
         else:
             result = self._fetch_json('/'.join(filter(None, [self.API_BASE, type, api])))
+
+        if result is None:
+            return None
 
         if 'data' in result:
             return result['data']

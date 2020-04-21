@@ -12,7 +12,7 @@ def test_search_single():
     assert w1.geohash == 'r1r143n'[:6]
 
 def test_search_repr():
-    assert "WeatherApi(geohash='r1r143', search='Parkville VIC', debug=0)" in repr(w1)
+    assert "WeatherApi(geohash='r1r143', search='Parkville VIC'" in repr(w1)
 
 def test_search_location():
     location = w1.location()
@@ -61,7 +61,7 @@ def test_search_single_unknown():
     assert w1a.geohash is None
 
 def test_search_repr_unknown():
-    assert "WeatherApi(geohash=None, search='', debug=0)" in repr(w1a)
+    assert "WeatherApi(geohash=None, search=''" in repr(w1a)
 
 def test_search_location_unknown():
     assert w1a.location() is None
@@ -77,6 +77,27 @@ def test_forecasts_daily_unknown():
 
 def test_forecasts_3hourly_unknown():
     assert w1a.forecasts_3hourly() is None
+
+
+def test_geohash_blank():
+    w1b = api.WeatherApi(geohash='')
+    assert w1b.location() is None
+
+def test_geohash_short():
+    w1b = api.WeatherApi(geohash='zzz', debug=1)
+    assert w1b.location() is None
+
+def test_geohash_location_long():
+    w1b = api.WeatherApi(geohash='zzzzzzzz')
+    assert w1b.location() is None
+
+def test_geohash_location_outsude_area():
+    w1b = api.WeatherApi(geohash='zzzzzz')
+    assert w1b.location() is None
+
+def test_geohash_location_invalid():
+    w1b = api.WeatherApi(geohash='******')
+    assert w1b.location() is None
 
 
 w2 = api.WeatherApi() 
@@ -110,7 +131,7 @@ def test_search_single_endeavour_hills():
 
 def test_search_repr_endeavour_hills():
     # repr returns the six character geohash
-    assert "WeatherApi(geohash='r1prcr', search='Endeavour Hills VIC', debug=0)" in repr(w5)
+    assert "WeatherApi(geohash='r1prcr', search='Endeavour Hills VIC'" in repr(w5)
 
 def test_search_location_endeavour_hills():
     location = w5.location()
@@ -118,5 +139,3 @@ def test_search_location_endeavour_hills():
     assert location['name']     == 'Endeavour Hills'
     assert location['state']    == 'VIC'
     assert location['timezone'] == 'Australia/Melbourne'
-
-

@@ -10,7 +10,7 @@ Currently a work in progress subject to breaking changes!
 
 ## Purpose
 
-The purpose of these modules is to fetch weather data from various Australian Bureau of Meteorology websites.
+The purpose of these modules is to fetch weather data from various Australian Bureau of Meteorology (BOM) websites.
 
 
 
@@ -62,7 +62,6 @@ print(summary.Summary(search='parkville+vic'))
 ```
 
 
-
 ## XML and Scraping
 
 Modules:
@@ -71,7 +70,7 @@ Modules:
 - `uv_index` - fetch the UV data from the XML encoded state based IDZ00107-IDZ00113 products.
 - `place` - scrape data from location based [pages](http://www.bom.gov.au/places/vic/parkville/).
 
-Where possible WeatherApi, should be used as it uses an API rather than scraping the web page.
+Where possible WeatherApi, should be used as it uses an (unofficial) BOM API rather than scraping the BOM web pages.
 
 
 ### Sample for Parkville in Melbourne Vic Australia
@@ -91,7 +90,6 @@ print('Air Temperature', air_temperature)
 
 forecast = place_data.forecast()
 print('Forecast', forecast)
-
 
 uv_data = uv_index.UvIndex('Vic')
 print('\n' + uv_data.acknowedgment)

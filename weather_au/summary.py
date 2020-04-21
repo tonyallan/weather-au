@@ -3,11 +3,11 @@ from weather_au import api
 
 class Summary:
     """
-    Use the API to bring together a summary of the current weather and forecast
-    that is similar to https://weather.bom.gov.au/
+    Use the BOM API to bring together a summary of the current weather and forecast
+    that is similar to the data presented using weather.bom.gov.au
 
     TODO: validate the text and values for max_temp, overnight_min_temp, 
-          chance_of_rain based on when the website switches from one form to anoth.
+          chance_of_rain based on when the website switches from one form to another.
     """
 
     def __init__(self, geohash=None, search=None, debug=0):
