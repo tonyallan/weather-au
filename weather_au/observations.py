@@ -40,6 +40,18 @@ class Observations:
             return None
 
 
+    def period_attribute(self, wmo_id=None, attribute=None):
+
+        elements = self.soup.find('station', {'wmo-id': wmo_id})
+
+        attrs = elements.find('period').attrs
+
+        if attribute in attrs:
+            return attrs[attribute]
+        else:
+            return None
+
+
     def air_temperature(self, wmo_id=None):
         """ Don't assume that any elements exist or that there is an element with type air_temperature
         """
@@ -54,6 +66,19 @@ class Observations:
 
         return None
 
+    def rainfall(self, wmo_id=None):
+        """ Don't assume that any elements exist or that there is an element with type rainfall
+        """
+
+        elements = self.soup.find('station', {'wmo-id': wmo_id})
+
+        if elements is not None:
+            rainfall_el = elements.find('element', {'type': 'rainfall'})
+
+            if rainfall_el is not None and len(rainfall_el.contents) > 0:
+                    return rainfall_el.contents[0]
+
+        return None
 
     def __str__(self):
         return str(self.soup)
