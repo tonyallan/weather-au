@@ -46,14 +46,14 @@ def test_forecasts_daily():
     assert 'temp_max' in fd[0]
     assert 'short_text' in fd[0]
 
-def test_forecasts_3hourly():
-    f3 = w1.forecasts_3hourly()
 
-    assert len(f3) >= 16
-    assert 'time' in f3[0]
-    assert 'temp' in f3[0]
-    assert 'icon_descriptor' in f3[0]
+def test_forecasts_hourly():
+    f1 = w1.forecasts_hourly()
 
+    assert len(f1) >= 72
+    assert 'time' in f1[0]
+    assert 'temp' in f1[0]
+    assert 'icon_descriptor' in f1[0]
 
 w1a = api.WeatherApi(search='some+unknown+place')
 
@@ -75,8 +75,8 @@ def test_forecast_rain_unknown():
 def test_forecasts_daily_unknown():
     assert w1a.forecasts_daily() is None
 
-def test_forecasts_3hourly_unknown():
-    assert w1a.forecasts_3hourly() is None
+def test_forecasts_hourly_unknown():
+    assert w1a.forecasts_hourly() is None
 
 
 w2 = api.WeatherApi() 
