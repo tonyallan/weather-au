@@ -19,7 +19,7 @@ class WeatherApi:
 
     Data is in metric units unless otherwise indicated.
 
-    forecasts/3-hourly checks for a six character geohash. Search return 7 characters.
+    forecasts/hourly checks for a six character geohash. Search return 7 characters.
 
     # click on warning
     # https://api.weather.bom.gov.au/v1/warnings/IDV36310?cbts=1568014740
@@ -30,7 +30,7 @@ class WeatherApi:
     API_FORECAST_RAIN = API_BASE + 'forecast/rain'
     API_WARNINGS = API_BASE + 'warnings'
     API_FORECAST_DAILY = 'forecasts/daily'
-    API_FORECAST_3HOURLY = 'forecasts/3-hourly'
+    API_FORECAST_HOURLY = 'forecasts/hourly'
     API_OBSERVATIONS = 'observations'
     SEARCH = 'locations?search='
     ACKNOWLEDGEMENT = 'Data courtesy of the Australian Bureau of Meteorology (https://api.weather.bom.gov.au)'
@@ -235,9 +235,9 @@ class WeatherApi:
         return self.api('forecasts/daily')
 
 
-    def forecasts_3hourly(self):
+    def forecasts_hourly(self):
         """
-        Example https://api.weather.bom.gov.au/v1/locations/r1r143/forecasts/3-hourly
+        Example https://api.weather.bom.gov.au/v1/locations/r1r143/forecasts/hourly
 
         [{rain:{amount:{min, max, units}, chance},
                temp,
@@ -255,7 +255,7 @@ class WeatherApi:
 
         A six character geohash is expected.
         """
-        return self.api('forecasts/3-hourly')
+        return self.api('forecasts/hourly')
 
 
     def __repr__(self):

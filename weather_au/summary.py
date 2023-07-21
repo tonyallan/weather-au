@@ -7,7 +7,7 @@ class Summary:
     that is similar to https://weather.bom.gov.au/
 
     TODO: validate the text and values for max_temp, overnight_min_temp, 
-          chance_of_rain based on when the website switches from one form to anoth.
+          chance_of_rain based on when the website switches from one form to another.
     """
 
     def __init__(self, geohash=None, search=None, debug=0):
@@ -21,7 +21,7 @@ class Summary:
         self.observations        = self.api.observations()
         self.forecast_rain       = self.api.forecast_rain()
         self.forecasts_daily     = self.api.forecasts_daily()
-        self.forecasts_3hourly   = self.api.forecasts_3hourly()
+        self.forecasts_hourly    = self.api.forecasts_hourly()
 
 
     def summary(self):
