@@ -1,7 +1,7 @@
 import sys
 from weather_au import api
 
-loc = 'endeavour-hills+vic'
+loc = '3802'
 w = api.WeatherApi(search=loc, debug=0)
 
 print(repr(w))
@@ -48,6 +48,6 @@ for f in w.forecasts_daily():
     print(f"{f['date']} temp_min:{temp_min}, temp_max:{temp_max}, {f['short_text']}")
 
 
-print('\n3 Hourly:')
-for f in w.forecasts_3hourly():
+print('\nHourly:')
+for f in w.forecasts_hourly():
     print(f"{f['time']} temp:{f['temp']:2}, {f['icon_descriptor']}")
