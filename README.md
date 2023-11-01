@@ -16,7 +16,7 @@ The purpose of these modules is to fetch weather data from various Australian Bu
 
 ## Weather API
 
-Fetches data from the API's at `api.weather.bom.gov.au` (e.g. [Parkville 3-hourly forecast](https://api.weather.bom.gov.au/v1/locations/r1r143/forecasts/3-hourly)).
+Fetches data from the API's at `api.weather.bom.gov.au` (e.g. [Parkville hourly forecast](https://api.weather.bom.gov.au/v1/locations/r1r143/forecasts/hourly)).
 
 This information has been reverse engineered from the [beta website](https://weather.bom.gov.au/) with no information about future access arrangements, content or availability.
 
@@ -26,7 +26,8 @@ This information has been reverse engineered from the [beta website](https://wea
 import sys
 from weather_au import api
 
-w = api.WeatherApi(search='parkville+vic', debug=0)
+loc = '3052'
+w = api.WeatherApi(search=loc, debug=0)
 
 location = w.location()
 
@@ -48,8 +49,8 @@ print(f"\nObservations (temp): {observations['temp']:2}")
 forecast_rain = w.forecast_rain()
 print(f"Forecast Rain:       amount:{forecast_rain['amount']}, chance:{forecast_rain['chance']}")
 
-print('\n3 Hourly:')
-for f in w.forecasts_3hourly():
+print('\nHourly:')
+for f in w.forecasts_hourly():
     print(f"{f['time']} temp:{f['temp']:2}, {f['icon_descriptor']}")
 ```
 
@@ -58,7 +59,7 @@ for f in w.forecasts_3hourly():
 ```python3
 from weather_au import summary
 
-print(summary.Summary(search='parkville+vic'))
+print(summary.Summary(search='parkville').summary_text())
 ```
 
 
@@ -77,7 +78,7 @@ Where possible WeatherApi, should be used as it uses an API rather than scraping
 ### Sample for Parkville in Melbourne Vic Australia
 
 ```python3
-from weather import place, observations, uv_index
+from weather_au import place, observations, uv_index
 
 # Parse http://www.bom.gov.au/places/vic/parkville
 place_data = place.Place('vic', 'parkville')
