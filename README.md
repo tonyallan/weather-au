@@ -26,13 +26,13 @@ This information has been reverse engineered from the [beta website](https://wea
 import sys
 from weather_au import api
 
-w = api.WeatherApi(search='parkville+vic', debug=0)
+w = api.WeatherApi(search='3052', debug=0)
 
 location = w.location()
 
 # check if the search produced a result (other methods will also return None if the search fails).
 if location is None:
-    sys.exit('Search failed for location ' + loc)
+    sys.exit('Search failed for location ' + location)
 
 print(f"\nLocation: {location['name']} {location['state']}, timezone:{location['timezone']}\n")
 
@@ -48,8 +48,8 @@ print(f"\nObservations (temp): {observations['temp']:2}")
 forecast_rain = w.forecast_rain()
 print(f"Forecast Rain:       amount:{forecast_rain['amount']}, chance:{forecast_rain['chance']}")
 
-print('\n3 Hourly:')
-for f in w.forecasts_3hourly():
+print('\nHourly:')
+for f in w.forecasts_hourly():
     print(f"{f['time']} temp:{f['temp']:2}, {f['icon_descriptor']}")
 ```
 
