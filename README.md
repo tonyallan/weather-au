@@ -16,7 +16,7 @@ The purpose of these modules is to fetch weather data from various Australian Bu
 
 ## Weather API
 
-Fetches data from the API's at `api.weather.bom.gov.au` (e.g. [Parkville 3-hourly forecast](https://api.weather.bom.gov.au/v1/locations/r1r143/forecasts/3-hourly)).
+Fetches data from the API's at `api.weather.bom.gov.au` (e.g. [Parkville hourly forecast](https://api.weather.bom.gov.au/v1/locations/r1r143/forecasts/hourly)).
 
 This information has been reverse engineered from the [beta website](https://weather.bom.gov.au/) with no information about future access arrangements, content or availability.
 
