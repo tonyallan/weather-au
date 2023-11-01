@@ -58,7 +58,7 @@ for f in w.forecasts_hourly():
 ```python3
 from weather_au import summary
 
-print(summary.Summary(search='parkville+vic'))
+print(summary.Summary(search='parkville').summary_text())
 ```
 
 
