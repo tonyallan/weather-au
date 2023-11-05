@@ -49,9 +49,6 @@ print(f"\nObservations (temp): {observations['temp']:2}")
 forecast_rain = w.forecast_rain()
 print(f"Forecast Rain:       amount:{forecast_rain['amount']}, chance:{forecast_rain['chance']}")
 
-print('\nHourly:')
-for f in w.forecasts_hourly():
-    print(f"{f['time']} temp:{f['temp']:2}, {f['icon_descriptor']}")
 ```
 
 
@@ -73,36 +70,6 @@ Modules:
 - `place` - scrape data from location based [pages](http://www.bom.gov.au/places/vic/parkville/).
 
 Where possible WeatherApi, should be used as it uses an API rather than scraping the web page.
-
-
-### Sample for Parkville in Melbourne Vic Australia
-
-```python3
-from weather_au import place, observations, uv_index
-
-# Parse http://www.bom.gov.au/places/vic/parkville
-place_data = place.Place('vic', 'parkville')
-print(place_data.acknowedgment)
-
-station_id = place_data.station_id()
-print('Station ID',station_id)
-
-air_temperature = place_data.air_temperature()
-print('Air Temperature', air_temperature)
-
-forecast = place_data.forecast()
-print('Forecast', forecast)
-
-
-uv_data = uv_index.UvIndex('Vic')
-print('\n' + uv_data.acknowedgment)
-
-location_name = 'Melbourne'
-uv_message = uv_data.uv_message(uv_data.get_aac(location_name))
-
-print('UV Message for', location_name, uv_message)
-```
-
 
 
 ## Disclaimer
