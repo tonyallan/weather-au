@@ -94,8 +94,9 @@ class WeatherApi:
         if search == '':
             return []
 
-        # The search API doesn't like the dash character.
-        search = search.replace('-', '+')
+        # The search API doesn't like the dash character
+        # unless its a lat/lon search with a negative latitude.
+        search = search[0] + search[1:].replace('-', '+')
 
         data = self._fetch_json(f'{self.API_BASE}/{self.SEARCH}{search}')
 
